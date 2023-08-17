@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="7428d28297e0b1108fb0797e6253af87" extends="sys_import_set_row" label="catalog_itemm" max_length="40" name="x_58872_needit_catalog_itemm" type="collection">
+        <element attributes="edge_encryption_enabled=true,import_attribute_name=Active" label="Active" max_length="40" name="u_active" type="string"/>
+        <element attributes="edge_encryption_enabled=true,import_attribute_name=Application" label="Application" max_length="40" name="u_application" type="string"/>
+        <element attributes="edge_encryption_enabled=true,import_attribute_name=Catalogs" label="Catalogs" max_length="40" name="u_catalogs" type="string"/>
+        <element attributes="edge_encryption_enabled=true,import_attribute_name=Category" label="Category" max_length="40" name="u_category" type="string"/>
+        <element attributes="edge_encryption_enabled=true,import_attribute_name=Checked out" label="Checked out" max_length="40" name="u_checked_out" type="string"/>
+        <element attributes="edge_encryption_enabled=true,import_attribute_name=Description" label="Description" max_length="40" name="u_description" type="string"/>
+        <element attributes="edge_encryption_enabled=true,import_attribute_name=Fulfillment automation level" label="Fulfillment automation level" max_length="40" name="u_fulfillment_automation_level" type="string"/>
+        <element attributes="edge_encryption_enabled=true,import_attribute_name=Name" label="Name" max_length="40" name="u_name" type="string"/>
+        <element attributes="edge_encryption_enabled=true,import_attribute_name=Owner" label="Owner" max_length="40" name="u_owner" type="string"/>
+        <element attributes="edge_encryption_enabled=true,import_attribute_name=short description" label="short description" max_length="40" name="u_short_description" type="string"/>
+        <element attributes="edge_encryption_enabled=true,import_attribute_name=State" label="State" max_length="40" name="u_state" type="string"/>
+    </element>
+</database>

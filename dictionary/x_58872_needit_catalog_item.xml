@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="1dc01aca97a0b1108fb0797e6253afe9" extends="sys_import_set_row" label="catalog_item" max_length="40" name="x_58872_needit_catalog_item" type="collection">
+        <element attributes="edge_encryption_enabled=true,import_attribute_name=Name;Catalogs;Category;State;Checked out;Owner;Application;Active;Fulfillment automation level;short description;Description" label="Name;Catalogs;Category;State;Checked out;Owner;Application;Active;Fulfillment au" max_length="163" name="u_name_catalog_on_description" type="string"/>
+    </element>
+</database>

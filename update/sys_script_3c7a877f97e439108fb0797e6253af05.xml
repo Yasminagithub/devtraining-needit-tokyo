@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_script">
+    <sys_script action="INSERT_OR_UPDATE">
+        <abort_action>false</abort_action>
+        <access>package_private</access>
+        <action_delete>false</action_delete>
+        <action_insert>false</action_insert>
+        <action_query>false</action_query>
+        <action_update>false</action_update>
+        <active>true</active>
+        <add_message>false</add_message>
+        <advanced>true</advanced>
+        <change_fields>false</change_fields>
+        <client_callable>false</client_callable>
+        <collection>sc_cat_item_catalog</collection>
+        <condition/>
+        <description/>
+        <execute_function>false</execute_function>
+        <filter_condition/>
+        <is_rest>false</is_rest>
+        <message/>
+        <name>ParseExcelCatalog</name>
+        <order>100</order>
+        <priority>100</priority>
+        <rest_method/>
+        <rest_method_text/>
+        <rest_service/>
+        <rest_service_text/>
+        <rest_variables/>
+        <role_conditions/>
+        <script><![CDATA[(function executeRule(current, previous /*null when async*/ ) {
+
+        // Add your code here
+        // Business rule to process uploaded Excel file
+        var gratt = new GlideRecord('sys_attachment');
+
+        gratt.addQuery('table_sys_id', current.request_item); //checking the sys_id of RITM & the attachment table 
+        gratt.query();
+        var a = gratt.getRowCount();
+        gs.info("Number of rows - " + a); //count should be always 1, if 0 it didn't get the atachment file
+        if (gratt.next()) {
+            var parser = new sn_impex.GlideExcelParser();
+            var attachment = new GlideSysAttachment();
+            // use attachment sys id of an excel file
+            var attachmentStream = attachment.getContentStream(gratt.sys_id);
+            parser.setSheetNumber(0);
+            parser.setNullToEmpty(true);
+            parser.parse(attachmentStream);
+            //retrieve the column headers
+            var headers = parser.getColumnHeaders();
+            var header1 = headers[0]; //header NAME
+            var header2 = headers[1]; //header Catalogs
+            var header3 = headers[2]; //Category
+            var header4 = headers[3]; //State
+            var header5 = headers[4]; //Checkout
+            var header6 = headers[5]; //Owner
+            var header7 = headers[6]; //Application
+            var header8 = headers[7]; //Active
+            var header9 = headers[8]; //Fulfillment automation level
+            var header10 = headers[9]; //short description
+            var header11 = headers[10]; //Description
+            var arr = [];
+            var table = "";
+            while (parser.next()) {
+                var row = parser.getRow();
+                if (row[header1].toString() != '' || row[header2].toString() != '') {
+                    //table - Sending the full table structure as an html code 
+                    table = '<p><table style="border-collapse: collapse; width: 99.5294%; height: 87px;" border="1"><tbody><tr style="background-color: #8c03fc;"><td style="width: 12.7358%; text-align: center; height: 29px;"><span style="font-size: 10pt; font-family: Times; color: #ffffff;"><strong>NAME</strong> </span></td><td style="width: 12.7358%; text-align: center; height: 29px;"><span style="font-size: 10pt; font-family: Times; color: #ffffff;"><strong>EMAIL</strong></span></td><td style="width: 10.1415%; text-align: center; height: 29px;"><span style="font-size: 10pt; font-family: Times; color: #ffffff;"><strong>ONBOARDING</strong> </span></td><td style="width: 10.1415%; text-align: center; height: 29px;"><span style="font-size: 10pt; font-family: Times; color: #ffffff;"><strong>TEAM</strong> </span></td></tr><tr style="height: 58px; background-color: #f3edf7;"><td style="width: 12.7358%; height: 58px; text-align: center;"><br /><span style="font-family: Times; font-size: 10pt;">' + row[header1].toString() + '</span></td><td style="width: 12.7358%; height: 58px; text-align: center;"><br /><span style="font-family: Times; font-size: 10pt;">' + row[header2].toString() + '</span></td><td style="width: 10.1415%; height: 58px; text-align: center;"><br /><span style="font-family: Times; font-size: 10pt;">' + row[header3].toString() + '</span></td><td style="width: 10.1415%; height: 58px; text-align: center;"><br /><span style="font-family: Times; font-size: 10pt;">' + row[header4].toString() + '</span></td></tr></tbody></table></p>';
+                
+                var sendDetails = {}; //JSON object
+                sendDetails.bodyTab = table;
+                sendDetails.RecNAME = row[header1].toString();
+                sendDetails.Email = row[header2].toString();
+                var Details = JSON.stringify(sendDetails);
+                gs.eventQueue('email_trigger_automatic', current, Details, row[header2].toString()); //P1 - the details which will be send to the email script, P2 - The receiver email
+
+            } else {
+                break;
+            }
+        }
+    }
+})(current, previous);]]></script>
+        <sys_class_name>sys_script</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-08-16 11:24:48</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>3c7a877f97e439108fb0797e6253af05</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>ParseExcelCatalog</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="NeedIt" source="x_58872_needit">6ead8e780f603200cd674f8ce1050ed1</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="NeedIt">6ead8e780f603200cd674f8ce1050ed1</sys_scope>
+        <sys_update_name>sys_script_3c7a877f97e439108fb0797e6253af05</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2023-08-16 16:48:09</sys_updated_on>
+        <template/>
+        <when>before</when>
+    </sys_script>
+    <sys_translated_text action="delete_multiple" query="documentkey=3c7a877f97e439108fb0797e6253af05"/>
+</record_update>
